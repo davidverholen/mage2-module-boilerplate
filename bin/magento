@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+docker-compose exec mage2app /var/www/magento2/bin/magento $@

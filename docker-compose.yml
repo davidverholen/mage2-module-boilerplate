@@ -1,0 +1,32 @@
+mage2web:
+  build: ./docker/mage2web
+  volumes_from:
+    - mage2app
+  ports:
+    - 80:80
+  env_file:
+    - ./.env
+  links:
+    - mage2app
+
+mage2app:
+  build: ./docker/mage2app
+  volumes:
+    - mage2-source:/var/www/magento2
+    - mage2-composer:/var/www/.composer
+    - ./src:/var/www/module
+    - ./composer.json:/var/www/module/composer.json
+  env_file:
+    - ./.env
+  links:
+    - mage2db
+
+mage2db:
+  image: mariadb
+  environment:
+    - MYSQL_ROOT_PASSWORD=magento
+    - MYSQL_DATABASE=magento
+    - MYSQL_USER=magento
+    - MYSQL_PASSWORD=magento
+
+
